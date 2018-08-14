@@ -2,7 +2,7 @@ package main
 
 import (
 	"fmt"
-	kyc_provider "kyc/integrations/example"
+	kyc_provider "kyc/integrations/idology"//"kyc/integrations/example"
 	"kyc/common"
 )
 
