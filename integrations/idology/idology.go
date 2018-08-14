@@ -1,31 +1,52 @@
 package idology
 
 import (
-    // "fmt"
-    "io"
-    "os"
+    "fmt"
+    // "io"
+    // "os"
     "net/http"
-    // "io/ioutil"
-    "bytes"
-    "encoding/json"
+    "net/url"
+    "io/ioutil"
+    // "bytes"
+    "strings"
 	"kyc/common"
 )
 
 // Checks the customer with the KYC provider and returns a boolean indicating whether user is approved.
 func CheckCustomer(customer *common.UserData) bool {
 
-    server_url := "https://web.idologylive.com"
+    apiUrl := "https://web.idologylive.com"
+    path := "/api/idiq.svc"
 
-    body := new(bytes.Buffer)
+    body := url.Values{}
 
-    json.NewEncoder(body).Encode(customer)
+    body.Set("username", customer.Username)
+    body.Add("password", customer.Password)
+    body.Add("firstName", customer.FirstName)
+    body.Add("lastName", customer.LastName)
+    body.Add("address", customer.Address)
+    body.Add("city", customer.City)
+    body.Add("state", customer.State)
+    body.Add("zip", customer.Zip)
 
+    u, _ := url.ParseRequestURI(apiUrl)
+    u.Path = path
+    urlStr := u.String()
 
-    resp, _ := http.Post(server_url, "application/json;charset=utf-8", body)
+    fmt.Println(urlStr)
 
-    defer resp.Body.Close()
+    client := &http.Client{}
 
-    io.Copy(os.Stdout, resp.Body)
+    resp, _ := http.NewRequest("POST", urlStr, strings.NewReader(body.Encode()))
+    resp.Header.Add("Content-Type", "application/x-www-form-urlencoded")
 
+    r, _ := client.Do(resp)
+
+    defer r.Body.Close()
+
+    if ( r.StatusCode == http.StatusOK) {
+        bodyBytes, _ := ioutil.ReadAll(r.Body)
+        fmt.Println(bodyBytes)
+    }
 	return true
 }

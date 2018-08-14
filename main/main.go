@@ -6,12 +6,21 @@ import (
 	"kyc/common"
 )
 
+// SSN: 555-66-7777
+// DOB: 08/01/1940
+
 func main() {
 
 	// Example customer
 	customer := &common.UserData{
+		Username: "modulus.dev",
+		Password: "L8kKhQe9TjiwrM?s",
 		FirstName: "John",
-		LastName: "Doe",
+		LastName: "Bredenkamp",
+		Address: "147 Brentwood Drive",
+		City: "Nashville",
+		State: "TN",
+		Zip: "37214",
 	}
 
 	// Check a user against the example KYC provider

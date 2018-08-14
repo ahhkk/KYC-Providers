@@ -4,25 +4,28 @@ package common
 type UserData struct {
 
 	// User name
-	UserName string
+	Username string `json:"username"`
+
+	// Password
+	Password string `json:"password"`
 
 	// First name
-	FirstName string
+	FirstName string `json:"firstName"`
 
 	// Last name
-	LastName string
+	LastName string `json:"lastName"`
 
 	// Address
-	Address string
+	Address string `json:"address"`
 
 	// City
-	City string
+	City string `json:"city"`
 
 	// State
-	State string
+	State string `json:"state"`
 
 	// Zip code
-	Zip string
+	Zip string `json:"zip"`
 
 	// etc.
 
