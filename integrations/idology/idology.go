@@ -2,12 +2,9 @@ package idology
 
 import (
     "fmt"
-    // "io"
-    // "os"
     "net/http"
     "net/url"
     "io/ioutil"
-    // "bytes"
     "strings"
 	"kyc/common"
 )
@@ -15,13 +12,16 @@ import (
 // Checks the customer with the KYC provider and returns a boolean indicating whether user is approved.
 func CheckCustomer(customer *common.UserData) bool {
 
+    username := "modulus.dev"
+    password := "L8kKhQe9TjiwrM?s"
+
     apiUrl := "https://web.idologylive.com"
     path := "/api/idiq.svc"
 
     body := url.Values{}
 
-    body.Set("username", customer.Username)
-    body.Add("password", customer.Password)
+    body.Set("username", username)
+    body.Add("password", password)
     body.Add("firstName", customer.FirstName)
     body.Add("lastName", customer.LastName)
     body.Add("address", customer.Address)
@@ -46,7 +46,7 @@ func CheckCustomer(customer *common.UserData) bool {
 
     if ( r.StatusCode == http.StatusOK) {
         bodyBytes, _ := ioutil.ReadAll(r.Body)
-        fmt.Println(bodyBytes)
+        fmt.Println(string(bodyBytes))
     }
 	return true
 }

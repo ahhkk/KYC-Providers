@@ -13,8 +13,6 @@ func main() {
 
 	// Example customer
 	customer := &common.UserData{
-		Username: "modulus.dev",
-		Password: "L8kKhQe9TjiwrM?s",
 		FirstName: "John",
 		LastName: "Bredenkamp",
 		Address: "147 Brentwood Drive",

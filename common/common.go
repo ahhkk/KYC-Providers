@@ -3,11 +3,8 @@ package common
 // User data provided to KYC in order to check an individual.
 type UserData struct {
 
-	// User name
-	Username string `json:"username"`
-
-	// Password
-	Password string `json:"password"`
+	// Id
+	Id string `json:"id"`
 
 	// First name
 	FirstName string `json:"firstName"`
