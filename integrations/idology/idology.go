@@ -12,8 +12,8 @@ import (
 // Checks the customer with the KYC provider and returns a boolean indicating whether user is approved.
 func CheckCustomer(customer *common.UserData) bool {
 
-    username := "modulus.dev"
-    password := "L8kKhQe9TjiwrM?s"
+    username := "modulus.dev2"
+    password := "}$tRPfT1sZQmU@uh8@"
 
     apiUrl := "https://web.idologylive.com"
     path := "/api/idiq.svc"
