@@ -1,12 +1,12 @@
-package sumandsubstance
+package trulioo
 
 import (
-    "fmt"
+	"fmt"
     "net/http"
     "io/ioutil"
 	"kyc/common"
     "kyc/result"
-    "kyc/config"
+	"kyc/config"
 )
 
 // Checks the customer with the KYC provider
@@ -14,16 +14,14 @@ import (
 // Returns error status when http request fails
 func CheckCustomer(customer *common.UserData) (*result.Status, error) {
 
-    conf := config.LoadConfiguration()
+	conf := config.LoadConfiguration()
 
-    apiUrl := fmt.Sprintf(conf.Sumandsubstance.ApiUrl, customer.Id)
-    apiKey := conf.Sumandsubstance.ApiKey
+    username := conf.Username
+    password := conf.Password
+    apiUrl := fmt.Sprintf(conf.Trulioo.ApiUrl, "0ac8ccee-ab7a-495e-8b88-a6da1bdcb6ae")
 
-    request, _ := http.NewRequest("GET", apiUrl, nil)
-    request.Header.Add("Content-Type", "application/json")
-    query := request.URL.Query()
-    query.Add("key",apiKey)
-    request.URL.RawQuery = query.Encode()
+	request, _ := http.NewRequest("GET", apiUrl, nil)
+    request.SetBasicAuth(username, password)
 
     client := &http.Client{}
     response, _ := client.Do(request)

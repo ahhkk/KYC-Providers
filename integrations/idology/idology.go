@@ -7,19 +7,23 @@ import (
     "io/ioutil"
     "strings"
 	"kyc/common"
+    "kyc/result"
+    "kyc/config"
+    xj "github.com/basgys/goxml2json"
 )
 
-// Checks the customer with the KYC provider and returns a boolean indicating whether user is approved.
-func CheckCustomer(customer *common.UserData) bool {
+// Checks the customer with the KYC provider
+// Returns type of status value and status value which represents the customer's status
+// Returns error status when http request fails
+func CheckCustomer(customer *common.UserData) (*result.Status, error) {
 
-    username := "modulus.dev2"
-    password := "}$tRPfT1sZQmU@uh8@"
+    conf := config.LoadConfiguration()
 
-    apiUrl := "https://web.idologylive.com"
-    path := "/api/idiq.svc"
+    username := conf.Username
+    password := conf.Password
+    apiUrl := conf.Idology.ApiUrl
 
     body := url.Values{}
-
     body.Set("username", username)
     body.Add("password", password)
     body.Add("firstName", customer.FirstName)
@@ -29,24 +33,20 @@ func CheckCustomer(customer *common.UserData) bool {
     body.Add("state", customer.State)
     body.Add("zip", customer.Zip)
 
-    u, _ := url.ParseRequestURI(apiUrl)
-    u.Path = path
-    urlStr := u.String()
-
-    fmt.Println(urlStr)
+    request, _ := http.NewRequest("POST", apiUrl, strings.NewReader(body.Encode()))
+    request.Header.Add("Content-Type", "application/x-www-form-urlencoded")
 
     client := &http.Client{}
+    response, _ := client.Do(request)
+    defer response.Body.Close()
 
-    resp, _ := http.NewRequest("POST", urlStr, strings.NewReader(body.Encode()))
-    resp.Header.Add("Content-Type", "application/x-www-form-urlencoded")
-
-    r, _ := client.Do(resp)
-
-    defer r.Body.Close()
-
-    if ( r.StatusCode == http.StatusOK) {
-        bodyBytes, _ := ioutil.ReadAll(r.Body)
-        fmt.Println(string(bodyBytes))
+    if response.StatusCode != http.StatusOK {
+        return nil, fmt.Errorf("Status error: %v", response.StatusCode)
     }
-	return true
+
+    // convert XML response to JSON
+    bodyBytes, _ := ioutil.ReadAll(response.Body)
+    json, _ := xj.Convert( strings.NewReader(string(bodyBytes)) )
+
+    return &result.Status{"High", json.String()}, nil
 }

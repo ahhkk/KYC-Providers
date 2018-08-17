@@ -15,3 +15,19 @@ func CheckCustomer(customer *common.UserData) bool
 ```
 
 The main package will call this method in a goroutine to perform a check. The method should block until a response is has been received from the KYC provider.
+
+## Update
+
+A single exported method changed to:
+
+```go
+func CheckCustomer(customer *common.UserData) (*result.Status, error) - returns error when http request fails
+```
+
+## Packages
+go get github.com/basgys/goxml2json
+go get golang.org/x/text/encoding
+
+
+## Config Variables
+Test user, apiUrl and apiKey for each provider are saved in "/config/development.json"
