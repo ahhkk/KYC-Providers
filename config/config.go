@@ -19,6 +19,7 @@ type Config struct {
     Idology Api `json:"idology"`
     Sumandsubstance Api `json:"sumandsubstance"`
     Trulioo Api `json:"trulioo"`
+    Shuftipro Api `json:"shuftipro"`
 }
 
 func LoadConfiguration() Config {

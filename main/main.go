@@ -11,9 +11,8 @@ import (
 
 func main() {
 
-	// Example customer for IDology provider
+	// Example customer for IDology provider - Done ( need to know what field from json should be used as the result )
 	customer := &common.UserData{
-		Id: "5b7298530a975a1df03bdd13",
 		FirstName: "John",
 		LastName: "Smith",
 		Address: "222333 PEACHTREE PLACE",
@@ -22,18 +21,21 @@ func main() {
 		Zip: "30318",
 	}
 
-	// Example customer for Sumandsubstance provider
+	// Example customer for Sumandsubstance provider ( need to know what field from json should be used as the result )
 	// customer := &common.UserData{
-	//	Id: "5b7298530a975a1df03bdd13",
+	// 	Id: "5b7298530a975a1df03bdd13",
 	// }
+
+	// Example customer for Trulioo provider - this requires TransactionID (not ready)
+
+	// Example customer for Shuftipro provider - this requires secrect_key and client_id (not ready)
 
 	// Check a user against the KYC provider
 	check, err := kyc_provider.CheckCustomer(customer)
 
 	if err == nil {
 		fmt.Printf("\nResponse Type: %s\n", check.Type)
-		fmt.Printf("\nResponse Value: \n")
-		fmt.Printf("\n%v\n", check.Value)
+		fmt.Printf("\nResponse Value: %v\n", check.Value)
 	} else {
 		fmt.Println(err.Error())
 	}

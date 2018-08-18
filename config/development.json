@@ -1,5 +1,5 @@
 {
-    "username": "modulus.dev2",
+    "username": "modulus.dev",
     "password": "}$tRPfT1sZQmU@uh8@",
     "idology": {
         "apiUrl": "https://web.idologylive.com/api/idiq.svc",
@@ -11,6 +11,10 @@
     },
     "trulioo": {
         "apiUrl": "https://api.globaldatacompany.com/verifications/v1/transaction/%s/status",
+        "apiKey": ""
+    },
+    "shuftipro": {
+        "apiUrl": "https://api.shuftipro.com/status",
         "apiKey": ""
     }
 }
